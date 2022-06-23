@@ -18,16 +18,16 @@
     align-items: center;
 }
 
-.productCard__bages {
+.productCard__badges {
     display: flex;
     flex-wrap: wrap;
     min-height: 24px;
 }
 
-.productCard__bage {
+.productCard__badge {
     border-radius: 4px;
     padding: 6px;
-    font-size: 12px;
+    font-size: 8px;
     font-weight: 500;
     margin: 6px;
     background-color: #888;
@@ -40,10 +40,17 @@
     margin: 6px;
 }
 
-.productCard__price {
-    font-size: 16px;
-    font-weight: 500;
+.productCard__priceWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     margin: 6px;
+}
+
+.productCard__price {
+    font-size: 18px;
+    font-weight: 600;
 }
 .productCard__promoPrice {
     font-size: 16px;

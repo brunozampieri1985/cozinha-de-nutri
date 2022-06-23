@@ -6,3 +6,23 @@
     padding: 20px;
     gap: 25px;
 }
+
+.productList__filters {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 20px;
+    gap: 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.productList__filterInput {
+    width: 250px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #333;
+}
