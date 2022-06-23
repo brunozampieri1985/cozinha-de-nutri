@@ -47,7 +47,6 @@ const ProductList: React.FC = (props) => {
    return (
       <div>
          <div className={styles.productList__filters}>
-            <p>Filtros</p>
             <input
                type="text"
                placeholder="Digite o nome do prato..."
@@ -55,7 +54,7 @@ const ProductList: React.FC = (props) => {
                onChange={(e) => filters.byText(e.target.value)}
                className={styles.productList__filterInput}
             />
-            <select className={styles.productList__filterInput}>
+            {/* <select className={styles.productList__filterInput}>
                <option value="Todas">Todas</option>
                {categories.map((category, index) => (
                   <option value={category} key={index}>
@@ -70,7 +69,7 @@ const ProductList: React.FC = (props) => {
                      {subcategory}
                   </option>
                ))}
-            </select>
+            </select> */}
          </div>
          <div className={styles.productList}>
             {cardapio.map((item, index) => (
