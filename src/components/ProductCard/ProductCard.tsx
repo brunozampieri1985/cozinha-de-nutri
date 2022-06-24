@@ -1,14 +1,17 @@
 import styles from './ProductCard.module.css'
-import { addToCart, ICardapio } from '@services/cardapio'
+import { ICardapio, AppContext } from '@contexts/AppStore'
 import formatters from '@utils/formatters'
 import Button from '@components/Button'
 import { BsCartPlusFill } from 'react-icons/bs'
+import { useContext } from 'react'
 
 type ProductCardProps = {
    product: ICardapio
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+   const { addToCart } = useContext(AppContext)
+
    let showImage = false
 
    return (
@@ -48,7 +51,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                )}
             </div>
             <div className={styles.productCard__actions}>
-               <Button>
+               <Button onClick={() => addToCart(product)}>
                   <BsCartPlusFill fontSize={16} />
                   &nbsp; Adicionar
                </Button>
