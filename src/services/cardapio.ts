@@ -1,6 +1,5 @@
 export interface ICardapio {
    category: string
-   subcategory: string
    title: string
    isLowCarb: boolean
    weight: number
@@ -25,8 +24,7 @@ export interface IOrder {
 
 export const Cardapio: ICardapio[] = [
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de mandioca com carne moída',
       isLowCarb: false,
       weight: 250,
@@ -35,8 +33,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de mandioca com carne moída',
       isLowCarb: false,
       weight: 400,
@@ -45,8 +42,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de mandioquinha com frango',
       isLowCarb: false,
       weight: 250,
@@ -55,8 +51,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de mandioquinha com frango',
       isLowCarb: false,
       weight: 400,
@@ -65,8 +60,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de batata doce com frango',
       isLowCarb: false,
       weight: 250,
@@ -75,8 +69,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Escondidinho',
+      category: 'Escondidinho',
       title: 'Escondidinho de batata doce com frango',
       isLowCarb: false,
       weight: 400,
@@ -85,8 +78,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral com almondegas ao sugo',
       isLowCarb: false,
       weight: 250,
@@ -95,8 +87,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral com almondegas ao sugo',
       isLowCarb: false,
       weight: 400,
@@ -106,8 +97,7 @@ export const Cardapio: ICardapio[] = [
    },
 
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral ao sugo com frango em cubos e brócolis',
       isLowCarb: false,
       weight: 250,
@@ -116,8 +106,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral ao sugo com frango em cubos e brócolis',
       isLowCarb: false,
       weight: 400,
@@ -126,8 +115,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral ao sugo com tilápia grelhada e brocolis',
       isLowCarb: false,
       weight: 250,
@@ -136,8 +124,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Espaguete',
+      category: 'Espaguete',
       title: 'Espaguete integral ao sugo com tilápia grelhada e brocolis',
       isLowCarb: false,
       weight: 400,
@@ -146,8 +133,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de batata, almôndegas ao sugo e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -156,8 +142,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de batata, almôndegas ao sugo e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -167,8 +152,7 @@ export const Cardapio: ICardapio[] = [
    },
 
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de batata com tilápia grelhada e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -177,8 +161,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de batata com tilápia grelhada e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -187,8 +170,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, carne moída e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -197,8 +179,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, carne moída e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -207,8 +188,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, carne desfiada e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -217,8 +197,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, carne desfiada e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -227,8 +206,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Strogonoff',
+      category: 'Strogonoff',
       title: 'Arroz, strogonoff de carne e batata rustica assada',
       isLowCarb: false,
       weight: 250,
@@ -237,8 +215,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Strogonoff',
+      category: 'Strogonoff',
       title: 'Arroz, strogonoff de carne e batata rustica assada',
       isLowCarb: false,
       weight: 400,
@@ -247,8 +224,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, frango ao curry e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -257,8 +233,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, frango ao curry e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -267,8 +242,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, frango cremoso e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -277,8 +251,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz e Feijão',
+      category: 'Arroz e Feijão',
       title: 'Arroz, feijão, frango cremoso e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -287,8 +260,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Strogonoff',
+      category: 'Strogonoff',
       title: 'Arroz, strogonoff de frango e batata rustica assada',
       isLowCarb: false,
       weight: 250,
@@ -297,8 +269,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Strogonoff',
+      category: 'Strogonoff',
       title: 'Arroz, strogonoff de frango e batata rustica assada',
       isLowCarb: false,
       weight: 400,
@@ -307,8 +278,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz com Brócolis',
+      category: 'Arroz com Brócolis',
       title: 'Arroz com brócolis, tilápia grelhada e mix de legumes',
       isLowCarb: false,
       weight: 250,
@@ -317,8 +287,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Arroz com Brócolis',
+      category: 'Arroz com Brócolis',
       title: 'Arroz com brócolis, tilápia grelhada e mix de legumes',
       isLowCarb: false,
       weight: 400,
@@ -327,8 +296,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Feijoada',
+      category: 'Feijoada',
       title: 'Feijoada Light (arroz, feijão preto, couve refogada, bacon, linguiça defumada)',
       isLowCarb: false,
       weight: 250,
@@ -337,8 +305,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Feijoada',
+      category: 'Feijoada',
       title: 'Feijoada Light (arroz, feijão preto, couve refogada, bacon, linguiça defumada)',
       isLowCarb: false,
       weight: 400,
@@ -347,8 +314,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Legumes',
+      category: 'Legumes',
       title: 'Mix de legumes com carne moída (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -357,8 +323,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Legumes',
+      category: 'Legumes',
       title: 'Mix de legumes com carne moída (low carb)',
       isLowCarb: true,
       weight: 400,
@@ -367,8 +332,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Legumes',
+      category: 'Legumes',
       title: 'Mix de legumes com frango em cubos (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -377,8 +341,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Legumes',
+      category: 'Legumes',
       title: 'Mix de legumes com frango em cubos (low carb)',
       isLowCarb: true,
       weight: 400,
@@ -387,8 +350,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de abobora com tiras de frango e mix de legumes (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -397,8 +359,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de abobora com tiras de frango e mix de legumes (low carb)',
       isLowCarb: true,
       weight: 400,
@@ -407,8 +368,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de abobora com tiras de frango e mix de legumes (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -417,8 +377,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de abobora com tiras de frango e mix de legumes (low carb)',
       isLowCarb: true,
       weight: 400,
@@ -427,8 +386,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de cenoura e beterraba com tilápia grelhada (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -437,8 +395,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Purê',
+      category: 'Purê',
       title: 'Purê de cenoura e beterraba com tilápia grelhada (low carb)',
       isLowCarb: true,
       weight: 400,
@@ -447,8 +404,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Lasanha',
+      category: 'Lasanha',
       title: 'Lasanha de berinjela à bolonhesa (low carb)',
       isLowCarb: true,
       weight: 250,
@@ -457,8 +413,7 @@ export const Cardapio: ICardapio[] = [
       promoPrice: false,
    },
    {
-      category: 'Pratos Quentes',
-      subcategory: 'Lasanha',
+      category: 'Lasanha',
       title: 'Lasanha de berinjela à bolonhesa (low carb)',
       isLowCarb: true,
       weight: 400,

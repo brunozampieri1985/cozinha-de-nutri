@@ -28,6 +28,10 @@
    color: #333;
 }
 
+.productList__filterInput:active, .productList__filterInput:focus {
+   outline-color: var(--theme-600);
+}
+
 @media (min-width: 520px) {
    .productList {
       flex-direction: row;

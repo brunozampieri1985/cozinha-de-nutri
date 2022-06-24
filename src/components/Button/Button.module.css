@@ -32,15 +32,15 @@
 
 .primary {
     color: #fff;
-    background-color: var(--theme-600);
-    border: 1px solid var(--theme-600);
+    background-color: var(--theme-700);
+    border: 1px solid var(--theme-700);
     
 }
 .primary:hover {
     color: #fff;
-    background-color: var(--theme-700);
-    border: 1px solid var(--theme-700);
-    box-shadow: 0px 0px 10px var(--theme-600);
+    background-color: var(--theme-800);
+    border: 1px solid var(--theme-800);
+    box-shadow: 0px 0px 10px var(--theme-700);
 }
 
 .small {

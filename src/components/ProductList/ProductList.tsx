@@ -7,7 +7,7 @@ import {
    ICardapio,
 } from '@services/cardapio'
 import ProductCard from '@components/ProductCard'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 const ProductList: React.FC = (props) => {
    const categories = Cardapio.reduce((acc, curr) => {
@@ -17,53 +17,69 @@ const ProductList: React.FC = (props) => {
       return acc
    }, [] as string[])
 
-   const subcategories = Cardapio.reduce((acc, curr) => {
-      if (!acc.includes(curr.subcategory)) {
-         acc.push(curr.subcategory)
-      }
-      return acc
-   }, [] as string[])
-
    const [cardapio, setCardapio] = useState<ICardapio[]>(Cardapio)
    const [filterByText, setFilterByText] = useState<string>('')
    const [filterByCategory, setFilterByCategory] = useState<string>('')
-   const [filterBySubcategory, setFilterBySubcategory] = useState<string>('')
 
-   useEffect(() => {
-      const handleFilters = () => {
-         if (filterByText !== '') {
-            setCardapio(
-               cardapio.filter((item) =>
-                  item.title.toLowerCase().includes(filterByText.toLowerCase())
-               )
-            )
-         }
+   const handleFilters = (by: string, value: string) => {
+      let result: ICardapio[] = []
+
+      if (by === 'text') {
+         setFilterByText(value)
          if (filterByCategory !== '') {
-            if (filterByCategory === 'Todas') setFilterByCategory('')
-            setCardapio(
-               cardapio.filter((item) => item.category === filterByCategory)
-            )
-         }
-         if (filterBySubcategory !== '') {
-            if (filterBySubcategory === 'Todas') setFilterBySubcategory('')
-            else {
-               setCardapio(
-                  cardapio.filter(
-                     (item) => item.subcategory === filterBySubcategory
-                  )
-               )
+            Cardapio.filter((item) => {
+               if (
+                  item.category === filterByCategory &&
+                  item.title.includes(value)
+               ) {
+                  result.push(item)
+               }
+            })
+         } else {
+            if (value === '') {
+               result = Cardapio
+            } else {
+               Cardapio.filter((item) => {
+                  if (item.title.includes(value)) {
+                     result.push(item)
+                  }
+               })
             }
          }
-         if (
-            filterByText === '' &&
-            filterByCategory === '' &&
-            filterBySubcategory === ''
-         ) {
-            setCardapio(Cardapio)
+      }
+      if (by === 'category') {
+         setFilterByCategory(value)
+         if (value === 'Todas') {
+            if (filterByText !== '') {
+               Cardapio.filter((item) => {
+                  if (item.title.includes(filterByText)) {
+                     result.push(item)
+                  }
+               })
+            } else {
+               result = Cardapio
+            }
+         } else {
+            if (filterByText !== '') {
+               Cardapio.filter((item) => {
+                  if (
+                     item.category === value &&
+                     item.title.includes(filterByText)
+                  ) {
+                     result.push(item)
+                  }
+               })
+            } else {
+               Cardapio.filter((item) => {
+                  if (item.category === value) {
+                     result.push(item)
+                  }
+               })
+            }
          }
       }
-      handleFilters()
-   }, [filterByText, filterByCategory, filterBySubcategory]) // eslint-disable-line
+      setCardapio(result)
+   }
 
    return (
       <div>
@@ -72,27 +88,19 @@ const ProductList: React.FC = (props) => {
                type="text"
                placeholder="Digite o nome do prato..."
                value={filterByText}
-               onChange={(e) => setFilterByText(e.target.value)}
+               onChange={(e) => handleFilters('text', e.target.value)}
                className={styles.productList__filterInput}
             />
             <select
                className={styles.productList__filterInput}
-               onChange={(e) => setFilterBySubcategory(e.target.value)}>
+               onChange={(e) => handleFilters('category', e.target.value)}>
                <option value="Todas">Todas</option>
-               {subcategories.map((subcategory, index) => (
-                  <option value={subcategory} key={index}>
-                     {subcategory}
+               {categories.map((category, index) => (
+                  <option value={category} key={index}>
+                     {category}
                   </option>
                ))}
             </select>
-            {/*  <select className={styles.productList__filterInput}>
-               <option value="Todas">Todas</option>
-               {subcategories.map((subcategory, index) => (
-                  <option value={subcategory} key={index}>
-                     {subcategory}
-                  </option>
-               ))}
-            </select> */}
          </div>
          <div className={styles.productList}>
             {cardapio.map((item, index) => (

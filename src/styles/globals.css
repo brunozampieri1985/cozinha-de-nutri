@@ -6,10 +6,13 @@
   --theme-400: #fbdba7;
   --theme-500: #f9cb80;
   --theme-600: #f5a524;
-  --theme-700: #b97509;
-  --theme-800: #925d07;
+  --theme-700: #97266D;
+  --theme-800: #702459;
   --theme-900: #4e3104;
 }
+
+/* #b97509 */
+/* #925d07 */
 
 @font-face {
 font-family: 'Montserrat';

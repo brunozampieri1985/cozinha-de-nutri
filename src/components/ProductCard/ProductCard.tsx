@@ -18,10 +18,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             <div className={styles.productCard__badges}>
                <div className={styles.productCard__badge}>
                   {product.category}
-               </div>
-               <div className={styles.productCard__badge}>
-                  {product.subcategory}
-               </div>
+               </div>               
                {product.isLowCarb ? (
                   <div className={styles.productCard__badge}>Low Carb</div>
                ) : null}
