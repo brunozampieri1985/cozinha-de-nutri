@@ -1,5 +1,5 @@
 import styles from './Cart.module.css'
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { AppContext } from '@contexts/AppStore'
 import Button from '@components/Button'
@@ -9,6 +9,9 @@ import formatters from '@utils/formatters'
 const Cart: React.FC = () => {
    const [showCart, setShowCart] = useState<boolean>(false)
    const { cart, getCartTotal, clearCart } = useContext(AppContext)
+
+   useEffect(() => {},[cart])
+   
    return (
       <>
          <div

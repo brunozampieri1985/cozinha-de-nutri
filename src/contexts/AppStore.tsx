@@ -468,6 +468,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
                   : item.price,
          }
          localStorage.setItem('cart', JSON.stringify([newOrderItem]))
+         setCart([newOrderItem])
          return
       }
       let currentCart = JSON.parse(currentStorage)
@@ -582,7 +583,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       if (window !== undefined) {
          getLocalCart()
       }
-   }, [])
+   }, [cart])
 
    return (
       <AppContext.Provider

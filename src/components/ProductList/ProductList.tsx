@@ -32,6 +32,7 @@ const ProductList: React.FC = (props) => {
                   </option>
                ))}
             </select>
+            <span className={styles.filterFeedback}>({cardapio.length})</span>
          </div>
          <div className={styles.productList}>
             {cardapio.map((item, index) => (

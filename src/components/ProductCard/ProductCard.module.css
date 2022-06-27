@@ -52,6 +52,7 @@
 .productCard__price {
     font-size: 18px;
     font-weight: 600;
+    color: var(--theme-700);
 }
 .productCard__promoPrice {
     font-size: 16px;

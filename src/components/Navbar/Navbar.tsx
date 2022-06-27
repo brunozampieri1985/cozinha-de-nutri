@@ -5,7 +5,7 @@ import Cart from '@components/Cart'
 
 const Navbar: React.FC = () => (
    <nav className={styles.navbar}>
-      <Image src="/logo-full.svg" width={280} height={70} alt="logo" />
+      <Image src="/logo-full.svg" width={422} height={80} alt="logo" />
       <Cart />
       <div className={styles.navbar__menuIcon}>
          <IoMenuOutline fontSize={24} color={'#fff'} />

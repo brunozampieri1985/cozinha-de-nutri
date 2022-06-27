@@ -29,7 +29,7 @@
 }
 
 .productList__filterInput:active, .productList__filterInput:focus {
-   outline-color: var(--theme-600);
+   outline-color: var(--theme-700);
 }
 
 @media (min-width: 520px) {
