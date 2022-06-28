@@ -1,5 +1,5 @@
 import styles from './Cart.module.css'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useState } from 'react'
 import { FiShoppingCart } from 'react-icons/fi'
 import { AppContext } from '@contexts/AppStore'
 import Button from '@components/Button'
@@ -16,10 +16,14 @@ const Cart: React.FC = () => {
       increaseQuantity,
       decreaseQuantity,
       discount,
-      getTotalItems
+      getTotalItems,
    } = useContext(AppContext)
 
    const totalItems = getTotalItems()
+   const handleClearCart = () => {
+      clearCart()
+      setShowCart(false)
+   }
 
    return (
       <>
@@ -30,13 +34,15 @@ const Cart: React.FC = () => {
             <div className={styles.cartInfo}>{totalItems}</div>
          </div>
          {showCart && (
+            <>
+            <div className={styles.cartOverlay} onClick={() => setShowCart(!showCart)}/>
             <div className={styles.cart}>
                <div className={styles.cartHeader}>
                   <span className={styles.cartHeaderText}>
                      <FiShoppingCart />
                      &nbsp;&nbsp;Carrinho
                   </span>
-                  <Button onClick={() => setShowCart(false)}>X</Button>
+                  <Button size={'small'} variant={'secondary'} onClick={() => setShowCart(false)}>X</Button>
                </div>
                <Divider color="#fff" />
                <div className={styles.cartBody}>
@@ -68,16 +74,11 @@ const Cart: React.FC = () => {
                                  </Button>
                               </div>
                            </span>
-                           <span className={styles.cartBodyItemPrice}>                              
+                           <span className={styles.cartBodyItemPrice}>
                               {formatters.currency(
                                  product.price * product.quantity
                               )}
-                              <Button
-                                 size="small"
-                                 variant="secondary"
-                                 onClick={() => removeFromCart(product)}>
-                                 X
-                              </Button>
+                             <div className={styles.cartRemoveButton} onClick={() => removeFromCart(product)}>X</div>
                            </span>
                         </div>
                      </div>
@@ -86,18 +87,23 @@ const Cart: React.FC = () => {
                <Divider color={'#fff'} />
                <div className={styles.cartFooter}>
                   <div className={styles.cartFooterText}>
-                     Total de Marmitas: {totalItems} |  Total: {formatters.currency(getCartTotal())}{discount > 0 && (
-                        <div className="">&nbsp;| &nbsp;Desconto: {discount * 100}%</div>
+                     Total de Marmitas: {totalItems} | Total:{' '}
+                     {formatters.currency(getCartTotal())}
+                     {discount > 0 && (
+                        <div className="">
+                           &nbsp;| &nbsp;Desconto: {discount * 100}%
+                        </div>
                      )}
                   </div>
                   <div className={styles.cartFooterActions}>
-                     <Button>Finalizar Pedido</Button>
-                     <Button onClick={() => clearCart()}>
+                     <Button size={'small'}>Finalizar Pedido</Button>
+                     <Button size={'small'} variant='secondary' onClick={() => handleClearCart()}>
                         Limpar Carrinho
                      </Button>
                   </div>
                </div>
             </div>
+            </>
          )}
       </>
    )

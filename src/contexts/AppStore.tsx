@@ -1,4 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 export interface ICardapio {
    category: string
@@ -7,7 +8,7 @@ export interface ICardapio {
    weight: number
    measure: string
    price: number
-   promoPrice: number | false   
+   promoPrice: number | false
 }
 
 export interface IOrderItem {
@@ -486,13 +487,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       return itemOnCart[0]
    }
 
-   const getFinalPrice = (item: ICardapio) => {
-      if (item.promoPrice) {
-         return item.promoPrice
-      }
-      return item.price
-   }
-
    const increaseQuantity = (item: IOrderItem, value: number) => {
       let newCart = cart.map((citem) => {
          if (citem.id === item.id) {
@@ -532,6 +526,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       })
       localStorage.setItem('cart', JSON.stringify(newCart))
       setCart(newCart)
+      toast('Item removido do carrinho', {
+         type: 'success',
+         position: 'top-right',
+         autoClose: 1000,
+      })
    }
 
    const addToCart = (item: ICardapio) => {
@@ -540,19 +539,35 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
          let newCart = [...cart, newItem]
          localStorage.setItem('cart', JSON.stringify(newCart))
          setCart(newCart)
+         toast(`${item.title} adicionado ao carrinho!`, {
+            type: 'success',
+            autoClose: 1000,
+            position: 'top-right'
+         })         
          return
       } else {
          let itemOnCart = isOnCart(item)
          if (itemOnCart) {
             let newCart = increaseQuantity(itemOnCart, 1)
             localStorage.setItem('cart', JSON.stringify(newCart))
-            setCart(newCart)
+            setCart(newCart)   
+            toast(`${item.title} adicionado ao carrinho!`, {
+               type: 'success',
+               autoClose: 1000,
+               position: 'top-right'
+            })           
             return
          } else {
             let newItem = OrderItem(cart.length + 1, item, 1)
             let newCart = [...cart, newItem]
             localStorage.setItem('cart', JSON.stringify(newCart))
-            setCart(newCart)
+            setCart(newCart)   
+            toast(`${item.title} adicionado ao carrinho!`, {
+               type: 'success',
+               autoClose: 1000,
+               position: 'top-right'
+            })
+            return           
          }
       }
    }
@@ -647,6 +662,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
    const clearCart = () => {
       setCart([])
       localStorage.removeItem('cart')
+      toast(`Carrinho limpo!`, {
+         type: 'success',
+         autoClose: 3000,
+         position: 'top-right'
+      })
    }
 
    const getTotalItems = () => {
@@ -695,7 +715,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             increaseQuantity,
             decreaseQuantity,
             discount,
-            getTotalItems
+            getTotalItems,
          }}>
          {children}
       </AppContext.Provider>
