@@ -17,6 +17,19 @@ export interface IOrderItem {
    price: number
 }
 
+export function OrderItem(
+   id: number,
+   item: ICardapio,
+   quantity: number
+): IOrderItem {
+   return {
+      id,
+      item,
+      quantity,
+      price: item.promoPrice ? item.promoPrice : item.price,
+   }
+}
+
 export interface IOrder {
    id: number | string
    items: IOrderItem[]
@@ -443,6 +456,11 @@ type AppStoreType = {
    filterByText: string
    getCartTotal: () => number
    clearCart: () => void
+   removeFromCart: (item: IOrderItem) => void
+   increaseQuantity: (item: IOrderItem, value: number) => IOrderItem[]
+   decreaseQuantity: (item: IOrderItem, value: number) => IOrderItem[]
+   getTotalItems: () => number
+   discount: number
 }
 
 export const AppContext = createContext<AppStoreType>({} as AppStoreType)
@@ -454,36 +472,102 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
    const [cardapio, setCardapio] = useState<ICardapio[]>(Cardapio)
    const [filterByText, setFilterByText] = useState<string>('')
    const [filterByCategory, setFilterByCategory] = useState<string>('')
+   const [discount, setDiscount] = useState(0)
+
+   const isOnCart = (item: ICardapio) => {
+      let itemOnCart = cart.filter((citem) => {
+         if (
+            item.title === citem.item.title &&
+            item.weight === citem.item.weight
+         ) {
+            return citem
+         }
+      })
+      return itemOnCart[0]
+   }
+
+   const getFinalPrice = (item: ICardapio) => {
+      if (item.promoPrice) {
+         return item.promoPrice
+      }
+      return item.price
+   }
+
+   const increaseQuantity = (item: IOrderItem, value: number) => {
+      let newCart = cart.map((citem) => {
+         if (citem.id === item.id) {
+            return {
+               ...citem,
+               quantity: citem.quantity + value,
+            }
+         }
+         return citem
+      })
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      setCart(newCart)
+      return newCart
+   }
+
+   const decreaseQuantity = (item: IOrderItem, value: number) => {
+      let newCart = cart.map((citem) => {
+         if (citem.id === item.id) {
+            return {
+               ...citem,
+               quantity:
+                  citem.quantity - value < 1 ? 1 : citem.quantity - value,
+            }
+         }
+         return citem
+      })
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      setCart(newCart)
+      return newCart
+   }
+
+   const removeFromCart = (item: IOrderItem) => {
+      let newCart = cart.filter((citem) => {
+         if (item.id !== citem.id) {
+            return citem
+         }
+      })
+      localStorage.setItem('cart', JSON.stringify(newCart))
+      setCart(newCart)
+   }
 
    const addToCart = (item: ICardapio) => {
-      let currentStorage = localStorage.getItem('cart')
-      if (!currentStorage) {
-         let newOrderItem: IOrderItem = {
-            id: 1,
-            item: item,
-            quantity: 1,
-            price:
-               typeof item.promoPrice === 'number'
-                  ? (item.promoPrice as number)
-                  : item.price,
-         }
-         localStorage.setItem('cart', JSON.stringify([newOrderItem]))
-         setCart([newOrderItem])
+      if (cart.length === 0) {
+         let newItem: IOrderItem = OrderItem(1, item, 1)
+         let newCart = [...cart, newItem]
+         localStorage.setItem('cart', JSON.stringify(newCart))
+         setCart(newCart)
          return
+      } else {
+         let itemOnCart = isOnCart(item)
+         if (itemOnCart) {
+            let newCart = increaseQuantity(itemOnCart, 1)
+            localStorage.setItem('cart', JSON.stringify(newCart))
+            setCart(newCart)
+            return
+         } else {
+            let newItem = OrderItem(cart.length + 1, item, 1)
+            let newCart = [...cart, newItem]
+            localStorage.setItem('cart', JSON.stringify(newCart))
+            setCart(newCart)
+         }
       }
-      let currentCart = JSON.parse(currentStorage)
-      let newOrderItem: IOrderItem = {
-         id: currentCart.length + 1,
-         item: item,
-         quantity: 1,
-         price:
-            typeof item.promoPrice === 'number'
-               ? (item.promoPrice as number)
-               : item.price,
-      }
-      currentCart.push(newOrderItem)
-      setCart(currentCart)
-      localStorage.setItem('cart', JSON.stringify(currentCart))
+   }
+
+   const getDiscount = () => {
+      let percentage = 0
+      let totalQuantity = 0
+      cart.map((item) => {
+         totalQuantity += item.quantity
+      })
+      if (totalQuantity > 5) percentage = 0.05
+      if (totalQuantity > 11) percentage = 0.1
+      if (totalQuantity > 17) percentage = 0.15
+      if (totalQuantity > 23) percentage = 0.2
+      return percentage
    }
 
    const handleFilters = (by: string, value: string) => {
@@ -561,16 +645,26 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
    }
 
    const clearCart = () => {
-        setCart([])
-        localStorage.removeItem('cart')
-    }
+      setCart([])
+      localStorage.removeItem('cart')
+   }
+
+   const getTotalItems = () => {
+      let totalQuantity = 0
+      cart.map((item) => {
+         totalQuantity += item.quantity
+      })
+      return totalQuantity
+   }
 
    const getCartTotal = () => {
       let total = 0
       cart.forEach((item) => {
          total += item.price * item.quantity
       })
-      return total
+      if (getDiscount() > 0) setDiscount(getDiscount)
+      else setDiscount(0)
+      return total - getDiscount() * total
    }
 
    useEffect(() => {
@@ -583,7 +677,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       if (window !== undefined) {
          getLocalCart()
       }
-   }, [cart])
+   }, [])
 
    return (
       <AppContext.Provider
@@ -596,7 +690,12 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             cardapio,
             filterByText,
             getCartTotal,
-            clearCart
+            clearCart,
+            removeFromCart,
+            increaseQuantity,
+            decreaseQuantity,
+            discount,
+            getTotalItems
          }}>
          {children}
       </AppContext.Provider>

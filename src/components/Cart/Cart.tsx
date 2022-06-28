@@ -8,17 +8,26 @@ import formatters from '@utils/formatters'
 
 const Cart: React.FC = () => {
    const [showCart, setShowCart] = useState<boolean>(false)
-   const { cart, getCartTotal, clearCart } = useContext(AppContext)
+   const {
+      cart,
+      getCartTotal,
+      clearCart,
+      removeFromCart,
+      increaseQuantity,
+      decreaseQuantity,
+      discount,
+      getTotalItems
+   } = useContext(AppContext)
 
-   useEffect(() => {},[cart])
-   
+   const totalItems = getTotalItems()
+
    return (
       <>
          <div
             className={styles.cartIcon}
             onClick={() => setShowCart(!showCart)}>
             <FiShoppingCart fontSize={24} color={'var(--theme-700'} />
-            <div className={styles.cartInfo}>{cart.length}</div>
+            <div className={styles.cartInfo}>{totalItems}</div>
          </div>
          {showCart && (
             <div className={styles.cart}>
@@ -40,9 +49,37 @@ const Cart: React.FC = () => {
                         <div className={styles.cartBodyQuantityPrice}>
                            <span className={styles.cartBodyItemQuantity}>
                               Quantidade: {product.quantity}
+                              <div className="">
+                                 <Button
+                                    size="small"
+                                    variant="outline"
+                                    onClick={() =>
+                                       increaseQuantity(product, 1)
+                                    }>
+                                    +
+                                 </Button>
+                                 <Button
+                                    size="small"
+                                    variant="outline"
+                                    onClick={() =>
+                                       decreaseQuantity(product, 1)
+                                    }>
+                                    -
+                                 </Button>
+                              </div>
                            </span>
                            <span className={styles.cartBodyItemPrice}>
-                              {formatters.currency(product.price)}
+                              {formatters.currency(product.price)} x{' '}
+                              {product.quantity} ={' '}
+                              {formatters.currency(
+                                 product.price * product.quantity
+                              )}
+                              <Button
+                                 size="small"
+                                 variant="secondary"
+                                 onClick={() => removeFromCart(product)}>
+                                 X
+                              </Button>
                            </span>
                         </div>
                      </div>
@@ -51,11 +88,15 @@ const Cart: React.FC = () => {
                <Divider color={'#fff'} />
                <div className={styles.cartFooter}>
                   <div className={styles.cartFooterText}>
-                     Total: {formatters.currency(getCartTotal())}
+                     Total de Marmitas: {totalItems} |  Total: {formatters.currency(getCartTotal())}{discount > 0 && (
+                        <div className="">&nbsp;| &nbsp;Desconto: {discount * 100}%</div>
+                     )}
                   </div>
                   <div className={styles.cartFooterActions}>
-                  <Button>Finalizar Pedido</Button>
-                  <Button onClick={() => clearCart()}>Limpar Carrinho</Button>
+                     <Button>Finalizar Pedido</Button>
+                     <Button onClick={() => clearCart()}>
+                        Limpar Carrinho
+                     </Button>
                   </div>
                </div>
             </div>
