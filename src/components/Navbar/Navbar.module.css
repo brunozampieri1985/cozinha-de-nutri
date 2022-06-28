@@ -19,3 +19,23 @@
     margin-right: 10px;
 
 }
+
+.navbarLogoSmall {
+    display: block;
+    width: 115px;
+    height: 90px;
+    background-image: url('/logo-final.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.navbarLogoFull {
+    display: block;
+    width: 342px;
+    height: 90px;
+    background-image: url('/logo-full-final.svg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}

@@ -8,7 +8,15 @@ const Navbar: React.FC = () => {
    const deviceWidth = useDeviceWidth()
    return (
       <nav className={styles.navbar}>
-         <Image src={deviceWidth > 390 ? "/logo-full.svg" : "/logo-rounded.svg"} width={deviceWidth > 390 ? 300 : 90} height={90} alt="logo" />
+         <div className={deviceWidth > 768 ? styles.navbarLogoFull : styles.navbarLogoSmall}>
+           {/*  <Image
+               src={'/logo-final.svg'}
+               width={115}
+               height={90}
+               alt="logo"
+               layout="fill"
+            /> */}
+         </div>
          <Cart />
          <div className={styles.navbar__menuIcon}>
             <IoMenuOutline fontSize={24} color={'#fff'} />
