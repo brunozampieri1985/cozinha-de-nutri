@@ -25,7 +25,7 @@
     right: 0;
     min-height: 100vh;
     width: 100vw;
-    background-color: var(--theme-700);
+    background-color: #fff;
     z-index: 1;   
     padding: 25px;
     animation: fadeIn 0.3s ease-in-out;
@@ -42,20 +42,25 @@
 .cartHeaderText {
     font-size: 20px;
     font-weight: bold;
-    color: #fff;
+    color: var(--theme-700);
 }
 
 .cartBody {
+    display: flex;
+    flex-direction: column;
     overflow-y: scroll;
     height: calc(100vh - 220px);
     background-color: #fff;
     padding: 10px;
-    font-size: 14px;
+    font-size: 12px;
+    gap: 10px;
+    
 }
 
 .cartBodyItem {  
     padding: 10px;
     border-bottom: 1px solid #eee;
+    box-shadow: 0px 0px 5px var(--theme-700);
 }
 
 .cartBodyQuantityPrice {
@@ -78,9 +83,9 @@
 .cartFooterText {
     display: flex;
     justify-content: flex-end;
-    font-size: 20px;
+    font-size: 12px;
     font-weight: bold;
-    color: #fff;
+    color: var(--theme-700);
 }
 
 .cartFooterActions {
@@ -88,7 +93,6 @@
     align-items: center;
     justify-content: space-between;
     margin-top: 25px;
-    color: #fff;
 }
 
 @keyframes fadeIn {

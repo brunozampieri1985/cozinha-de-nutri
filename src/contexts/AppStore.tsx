@@ -7,7 +7,7 @@ export interface ICardapio {
    weight: number
    measure: string
    price: number
-   promoPrice: number | false
+   promoPrice: number | false   
 }
 
 export interface IOrderItem {

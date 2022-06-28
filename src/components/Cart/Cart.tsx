@@ -68,9 +68,7 @@ const Cart: React.FC = () => {
                                  </Button>
                               </div>
                            </span>
-                           <span className={styles.cartBodyItemPrice}>
-                              {formatters.currency(product.price)} x{' '}
-                              {product.quantity} ={' '}
+                           <span className={styles.cartBodyItemPrice}>                              
                               {formatters.currency(
                                  product.price * product.quantity
                               )}
