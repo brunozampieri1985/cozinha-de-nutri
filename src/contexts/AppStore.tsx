@@ -663,7 +663,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setCart([])
       localStorage.removeItem('cart')
       toast(`Carrinho limpo!`, {
-         type: 'success',
+         type: 'info',
          autoClose: 3000,
          position: 'top-right'
       })
