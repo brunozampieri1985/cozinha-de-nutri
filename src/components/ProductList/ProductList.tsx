@@ -3,7 +3,7 @@ import { AppContext } from '@contexts/AppStore'
 import { useContext } from 'react'
 import ProductCard from '@components/ProductCard'
 
-const ProductList: React.FC = (props) => {
+const ProductList: React.FC = () => {
    const {
       handleFilters,
       cardapio,

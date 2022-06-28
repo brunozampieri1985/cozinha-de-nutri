@@ -3,6 +3,7 @@ import styles from './Navbar.module.css'
 import { IoMenuOutline } from 'react-icons/io5'
 import Cart from '@components/Cart'
 import useDeviceWidth from '@hooks/useDevice'
+import CartComponent from '@components/CartComponent'
 
 const Navbar: React.FC = () => {
    const deviceWidth = useDeviceWidth()
@@ -17,7 +18,8 @@ const Navbar: React.FC = () => {
                layout="fill"
             /> */}
          </div>
-         <Cart />
+         
+         <CartComponent />
          <div className={styles.navbar__menuIcon}>
             <IoMenuOutline fontSize={24} color={'#fff'} />
          </div>
