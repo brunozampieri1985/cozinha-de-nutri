@@ -1,5 +1,5 @@
 .cart {
-
+    
 }
 
 .cartBack {
@@ -21,6 +21,7 @@
 .cartBackInfo {
     display: flex;
     width: 100%;
+    max-width: 900px;
     justify-content: space-between;
     align-items: center;
     padding: 5px 0px;
@@ -71,6 +72,18 @@
     z-index: 1;
     background-color: #eee;
     padding: 15px;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        width: 0;
+        opacity: 0;
+    }
+    to {
+        width: 100%;
+        opacity: 1;
+    }
 }
 
 .cartBody {
@@ -86,8 +99,13 @@
     color: #000;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-evenly;
+}
+
+.cartHeaderTitle {
     font-size: 20px;
+    display: flex;
+    align-items: center;
 }
 
 .cartBodyItem {
@@ -171,3 +189,4 @@
     justify-content: space-between;
     gap: 20px;
 }
+

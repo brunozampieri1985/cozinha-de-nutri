@@ -1,0 +1,35 @@
+.order {
+    padding: 20px;
+}
+
+.orderTitle {
+    font-size: 24px;
+    padding: 10px;    
+    text-align: center;
+}
+
+.orderSubtitle {
+    font-size: 18px;
+    padding: 10px;
+    color: var(--theme-700);
+}
+
+.orderInputsDivided {
+    display: flex;
+    gap: 8px;
+}
+
+.orderSelectInput {
+   width: 50%;
+   padding: 10px;
+   border: 1px solid #ccc;
+   border-radius: 4px;
+   font-size: 16px;
+   font-weight: 500;
+   color: #333;
+}
+
+
+.orderSelectInput:active, .orderSelectInput:focus {
+   outline-color: var(--theme-700);
+}

@@ -35,8 +35,6 @@ export interface IOrder {
    id: number | string
    items: IOrderItem[]
    total: number
-   discount: number
-   totalWithDiscount: number
 }
 
 export const Cardapio: ICardapio[] = [
@@ -456,12 +454,14 @@ type AppStoreType = {
    cardapio: ICardapio[]
    filterByText: string
    getCartTotal: () => number
-   clearCart: () => void
+   clearCart: (showToast: boolean) => void
    removeFromCart: (item: IOrderItem) => void
    increaseQuantity: (item: IOrderItem, value: number) => IOrderItem[]
    decreaseQuantity: (item: IOrderItem, value: number) => IOrderItem[]
    getTotalItems: () => number
    discount: number
+   saveOrder: (order: IOrder) => void
+   order: IOrder | null
 }
 
 export const AppContext = createContext<AppStoreType>({} as AppStoreType)
@@ -474,7 +474,13 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
    const [filterByText, setFilterByText] = useState<string>('')
    const [filterByCategory, setFilterByCategory] = useState<string>('')
    const [discount, setDiscount] = useState(0)
+   const [order, setOrder] = useState<IOrder|null>(null)
 
+   
+   const saveOrder = (order: IOrder) => { 
+      setOrder(order)
+   }
+   
    const isOnCart = (item: ICardapio) => {
       let itemOnCart = cart.filter((citem) => {
          if (
@@ -542,32 +548,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
          toast(`${item.title} adicionado ao carrinho!`, {
             type: 'success',
             autoClose: 1000,
-            position: 'top-right'
-         })         
+            position: 'top-right',
+         })
          return
       } else {
          let itemOnCart = isOnCart(item)
          if (itemOnCart) {
             let newCart = increaseQuantity(itemOnCart, 1)
             localStorage.setItem('cart', JSON.stringify(newCart))
-            setCart(newCart)   
+            setCart(newCart)
             toast(`${item.title} adicionado ao carrinho!`, {
                type: 'success',
                autoClose: 1000,
-               position: 'top-right'
-            })           
+               position: 'top-right',
+            })
             return
          } else {
             let newItem = OrderItem(cart.length + 1, item, 1)
             let newCart = [...cart, newItem]
             localStorage.setItem('cart', JSON.stringify(newCart))
-            setCart(newCart)   
+            setCart(newCart)
             toast(`${item.title} adicionado ao carrinho!`, {
                type: 'success',
                autoClose: 1000,
-               position: 'top-right'
+               position: 'top-right',
             })
-            return           
+            return
          }
       }
    }
@@ -659,14 +665,16 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setCardapio(result)
    }
 
-   const clearCart = () => {
+   const clearCart = (showToast?: boolean) => {
       setCart([])
       localStorage.removeItem('cart')
-      toast(`Carrinho limpo!`, {
-         type: 'info',
-         autoClose: 3000,
-         position: 'top-right'
-      })
+      if (showToast) {
+         toast(`Carrinho limpo!`, {
+            type: 'info',
+            autoClose: 3000,
+            position: 'top-right',
+         })
+      }
    }
 
    const getTotalItems = () => {
@@ -716,6 +724,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             decreaseQuantity,
             discount,
             getTotalItems,
+            order,
+            saveOrder
          }}>
          {children}
       </AppContext.Provider>
