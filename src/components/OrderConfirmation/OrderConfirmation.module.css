@@ -33,3 +33,81 @@
 .orderSelectInput:active, .orderSelectInput:focus {
    outline-color: var(--theme-700);
 }
+
+.orderSummaryHeader {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 0 20px;
+    color: var(--theme-700);
+    display: flex;
+    border-bottom: #ccc 1px solid;
+}
+
+.orderSummaryHeader span:first-of-type {
+    display: flex;
+    width: 70%;
+}
+
+.orderSummaryHeader span:last-of-type {
+    display: flex;
+    width: 30%;
+    justify-content: flex-end;
+    padding-right: 0px 10px;
+}
+
+.orderSummary {
+    padding: 10px;    
+    font-weight: 500;
+    color: #333;
+    list-style: none;
+}
+
+.orderItem {
+    padding: 10px;    
+    border-bottom: 1px solid #ccc;
+    font-weight: 500;
+    color: #333;
+    display: flex;
+    min-height: 100px;
+}
+
+.orderValues {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 5px;
+    padding-right: 0px 10px;
+}
+
+.orderItem h3 {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    width: 70%;
+    padding: 10px;
+}
+
+.orderItem h3 p {
+    font-size: 12px;
+    font-weight: 500;
+    color: #333;
+    padding: 10px 0px;
+}
+
+.orderItem span {
+    font-size: 16px;
+    display: flex;
+    height: 80px;
+    text-align: right;
+    justify-content: flex-end;
+    align-items: center;
+    color: #333;
+    width: 30%;
+    padding: 10px;
+}
+
+
+
+
+
+

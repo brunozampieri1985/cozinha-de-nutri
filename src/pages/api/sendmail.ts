@@ -6,7 +6,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
 
    const msg = {
-      to: 'brunozampieri1985@gmail.com', // Change to your recipient
+      to: 'cozinhadenutri13@gmail.com', // Change to your recipient
       from: 'brunozampieri1985@gmail.com', // Change to your verified sender
       subject: 'Sending with SendGrid is Fun',
       text: 'and easy to do anywhere, even with Node.js',

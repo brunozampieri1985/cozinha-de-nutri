@@ -31,8 +31,16 @@ export function OrderItem(
    }
 }
 
+export interface IBuyer {
+   name: string
+   email: string
+   phone: string
+   city: string
+}
+
 export interface IOrder {
    id: number | string
+   buyer: IBuyer | null
    items: IOrderItem[]
    total: number
 }
@@ -454,6 +462,7 @@ type AppStoreType = {
    cardapio: ICardapio[]
    filterByText: string
    getCartTotal: () => number
+   getCartTotalWODiscount: () => number
    clearCart: (showToast: boolean) => void
    removeFromCart: (item: IOrderItem) => void
    increaseQuantity: (item: IOrderItem, value: number) => IOrderItem[]
@@ -461,7 +470,10 @@ type AppStoreType = {
    getTotalItems: () => number
    discount: number
    saveOrder: (order: IOrder) => void
-   order: IOrder | null
+   order: IOrder | null,
+   buyer: IBuyer | null,
+   saveBuyer: (buyer: IBuyer) => void
+   deliveryRate: (city: string) => number
 }
 
 export const AppContext = createContext<AppStoreType>({} as AppStoreType)
@@ -475,10 +487,32 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
    const [filterByCategory, setFilterByCategory] = useState<string>('')
    const [discount, setDiscount] = useState(0)
    const [order, setOrder] = useState<IOrder|null>(null)
+   const [buyer, setBuyer] = useState<IBuyer|null>(null)
 
+   const saveBuyer = (buyer: IBuyer) => {
+      setBuyer(buyer)
+      if (order) {
+         setOrder({
+            ...order,
+            buyer
+         })
+      }
+      localStorage.setItem('buyer', JSON.stringify(buyer))
+   }
    
    const saveOrder = (order: IOrder) => { 
       setOrder(order)
+   }
+
+   const deliveryRate = (city: string) => {
+      if (city === 'Peruíbe') {
+         if (getCartTotal() > 89) {
+            return 0
+         } else {
+            return 6
+         }
+      }
+      return 30
    }
    
    const isOnCart = (item: ICardapio) => {
@@ -695,6 +729,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       return total - getDiscount() * total
    }
 
+   const getCartTotalWODiscount = () => {
+      let total = 0
+      cart.forEach((item) => {
+         total += item.price * item.quantity
+      })
+      return total
+   }
+
    useEffect(() => {
       const getLocalCart = () => {
          const localCart = localStorage.getItem('cart')
@@ -702,8 +744,15 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             setCart(JSON.parse(localCart))
          }
       }
+      const getBuyerData = () => {
+         const buyerData = localStorage.getItem('buyer')
+         if (buyerData) {
+            setBuyer(JSON.parse(buyerData))
+         }
+      }
       if (window !== undefined) {
          getLocalCart()
+         getBuyerData()
       }
    }, [])
 
@@ -725,7 +774,11 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             discount,
             getTotalItems,
             order,
-            saveOrder
+            saveOrder,
+            buyer,
+            saveBuyer,
+            getCartTotalWODiscount,
+            deliveryRate
          }}>
          {children}
       </AppContext.Provider>

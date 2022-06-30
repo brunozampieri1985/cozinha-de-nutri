@@ -20,6 +20,7 @@ const CartComponent: React.FC = () => {
       discount,
       getTotalItems,
       saveOrder,
+      buyer
    } = useContext(AppContext)
 
    const handleClearCart = () => {
@@ -32,7 +33,9 @@ const CartComponent: React.FC = () => {
             id: 1,
             items: cart,
             total: getCartTotal(),
+            buyer
          }
+         
          saveOrder(order)
          router.push('/confirmacao')
       }
