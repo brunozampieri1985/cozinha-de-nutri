@@ -6,7 +6,6 @@ import formatters from '@utils/formatters'
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    const { orderToSubmit } = req.body
-
    const { buyer, items, total } = orderToSubmit as IOrder
 
    let html = `<h1>Pedido de ${buyer?.name as string}</h1><br/><hr/><br/>`
@@ -30,7 +29,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
 
    const msg = {
-      to: 'cozinhadenutri13@gmail.com', // Change to your recipient
+      to: 'cozinhadenutri@hotmail.com', // Change to your recipient
       from: 'cozinhadenutri@hotmail.com', // Change to your verified sender
       subject: `Pedido de ${buyer?.name as string}`,
       html,

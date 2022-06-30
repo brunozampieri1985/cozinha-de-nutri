@@ -60,7 +60,7 @@ const CartComponent: React.FC = () => {
                <div
                   className={styles.cartIcon}
                   onClick={() => handleShowCart()}>
-                  <FiShoppingCart fontSize={24} color={'var(--theme-700'} />
+                  <FiShoppingCart fontSize={24} color={'#000'} />
                   <div className={styles.cartInfo}>{getTotalItems()}</div>
                </div>
                <div className={styles.cartInfoTotal}>

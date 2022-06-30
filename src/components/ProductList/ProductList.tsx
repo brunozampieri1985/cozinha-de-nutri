@@ -1,8 +1,9 @@
 import styles from './ProductList.module.css'
 import { AppContext } from '@contexts/AppStore'
-import { useContext, useState } from 'react'
+import { createElement, useContext, useState } from 'react'
 import ProductCard from '@components/ProductCard'
 import Button from '@components/Button'
+import { RiFilterFill, RiFilterOffFill } from 'react-icons/ri'
 
 const ProductList: React.FC = () => {
    const [showFilters, setShowFilters] = useState<boolean>(false)
@@ -12,7 +13,13 @@ const ProductList: React.FC = () => {
    return (
       <div>
          <div className={styles.productList__filters}>
-            <Button onClick={() => setShowFilters(!showFilters)}>{!showFilters ? 'Filtros' : 'Esconder Filtros'}</Button>
+            <Button
+               variant="secondary"
+               onClick={() => setShowFilters(!showFilters)}>
+               {!showFilters
+                  ? <RiFilterFill />
+                  : <RiFilterOffFill />} Filtros
+            </Button>
             {showFilters && (
                <>
                   <input

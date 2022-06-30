@@ -1,0 +1,20 @@
+.politicaEntrega {
+    padding: 20px;
+}
+
+.entregaTitle {
+    font-size: 24px;
+    padding: 10px;    
+    text-align: center;
+}
+
+.entregaText {
+    font-size: 16px;
+    text-align: left;
+}
+
+.entregaActions {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+}

@@ -1,0 +1,60 @@
+.politicaDescontos {
+    padding: 20px;
+}
+
+.descontoTitle {
+    font-size: 24px;
+    padding: 10px;    
+    text-align: center;
+}
+
+.descontoText {
+    font-size: 16px;
+    text-align: center;
+}
+
+.descontosWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 290px;
+    height: 100%;
+    padding: 10px;
+    margin: 0 auto;    
+    border: 1px solid #ccc;    
+}
+
+.descontoItem {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.descontoItemTitle {
+    width: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 5px;
+    border-right: #ccc 1px solid;
+}
+
+.descontoItemValue {
+    width: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.descontoActions {
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+}

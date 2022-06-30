@@ -57,7 +57,7 @@
 
 .cartInfoTotal {
     font-size: 24px;
-    color: var(--theme-700);
+    color: #000;
     font-weight: bold;
 }
 
