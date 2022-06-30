@@ -522,7 +522,6 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setOrder(null)
       setDiscount(0)
       localStorage.removeItem('cart')
-      localStorage.removeItem('buyer')
    }
    
    const isOnCart = (item: ICardapio) => {
