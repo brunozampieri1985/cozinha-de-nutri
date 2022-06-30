@@ -133,7 +133,8 @@ const OrderConfirmation: React.FC = () => {
             clearAll()
             router.push('/')
          } else {
-            toast('Erro ao enviar pedido!', {
+            const result = await response.json()
+            toast(`Erro ao enviar pedido! ${result.message}` , {
                type: 'error',
             })
          }

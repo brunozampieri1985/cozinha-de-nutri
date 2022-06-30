@@ -31,7 +31,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
    const msg = {
       to: 'cozinhadenutri13@gmail.com', // Change to your recipient
-      from: 'brunozampieri1985@gmail.com', // Change to your verified sender
+      from: 'cozinhadenutri@hotmail.com', // Change to your verified sender
       subject: `Pedido de ${buyer?.name as string}`,
       html,
    }
@@ -42,7 +42,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
          res.status(response[0].statusCode).json({ message: 'Email sent!' })
       })
       .catch((error) => {
-         res.status(403).json({ message: error.message })
+         res.status(error.statusCode).json({ message: error.message })
       })
 }
 
