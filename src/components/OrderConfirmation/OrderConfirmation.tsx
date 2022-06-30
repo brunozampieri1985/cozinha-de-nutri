@@ -1,25 +1,157 @@
 import styles from './OrderConfirmation.module.css'
 import { useContext, useState } from 'react'
-import { AppContext, IBuyer, IOrderItem } from '@contexts/AppStore'
+import { AppContext, IBuyer, IOrder, IOrderItem } from '@contexts/AppStore'
 import Input from '@components/Input'
 import formatters from '@utils/formatters'
 import Button from '@components/Button'
+import { toast } from 'react-toastify'
+import { Router, useRouter } from 'next/router'
 
 const OrderConfirmation: React.FC = () => {
-   const { order, deliveryRate, getCartTotal, getCartTotalWODiscount, discount, getTotalItems } = useContext(AppContext)   
-   const [buyer, setBuyer] = useState<IBuyer>(order?.buyer ?? {} as IBuyer)
+   const {
+      order,
+      deliveryRate,
+      getCartTotal,
+      getCartTotalWODiscount,
+      discount,
+      getTotalItems,
+      saveBuyer,
+      clearAll
+   } = useContext(AppContext)
+   const [buyer, setBuyer] = useState<IBuyer>(order?.buyer ?? ({} as IBuyer))
    const [name, setName] = useState(buyer.name ?? '')
    const [email, setEmail] = useState(buyer.email ?? '')
    const [phone, setPhone] = useState(buyer.phone ?? '')
+   const [address, setAddress] = useState(buyer.address ?? '')
    const [city, setCity] = useState(buyer.city ?? 'Peruíbe')
    const [items, setItems] = useState<IOrderItem[]>(order?.items ?? [])
+   const [errors, setErrors] = useState<string[]>([])
    const [isBuyerDataSaved, setIsBuyerDataSaved] = useState(false)
 
-   const totalFinal = getCartTotal()
+   const router = useRouter()
+
+   const validation = {
+      name: () => name.length > 0,
+      email: () => {
+         const emailRegex =
+            /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+         return emailRegex.test(email)
+      },
+      phone: () => phone.length > 9,
+      address: () => address.length > 5,
+   }
+
    
+   const handleSaveBuyer = () => {
+      setErrors([])
+      setIsBuyerDataSaved(false)
+      //validate name
+      if (!validation.name()) {
+         setErrors([...errors, 'É necessário preencher seu nome'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate email
+      if (!validation.email()) {
+         setErrors([...errors, 'É necessário preencher um e-mail válido'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate phone
+      if (!validation.phone()) {
+         setErrors([...errors, 'É necessário preencher seu telefone'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate address
+      if (!validation.address()) {
+         setErrors([...errors, 'É necessário preencher seu endereço'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //save buyer and update order
+      setErrors([])
+      saveBuyer({
+         name,
+         email,
+         phone,
+         address,
+         city,
+      })
+      setIsBuyerDataSaved(true)
+      toast('Dados do comprador salvos com sucesso!', {
+         position: 'top-right',
+         autoClose: 3000,
+         type: 'success',
+      })
+   }
+
+   const handleSubmitOrder = async () => {
+      setErrors([])
+      setIsBuyerDataSaved(false)
+      //validate name
+      if (!validation.name()) {
+         setErrors([...errors, 'É necessário preencher seu nome'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate email
+      if (!validation.email()) {
+         setErrors([...errors, 'É necessário preencher um e-mail válido'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate phone
+      if (!validation.phone()) {
+         setErrors([...errors, 'É necessário preencher seu telefone'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      //validate address
+      if (!validation.address()) {
+         setErrors([...errors, 'É necessário preencher seu endereço'])
+         setIsBuyerDataSaved(false)
+         return
+      }
+      if (buyer && order) {
+         const orderToSubmit: IOrder = {
+            ...order,
+            total: getCartTotal() + deliveryRate(city),
+            
+         }
+         const response = await fetch('/api/sendmail', {
+            method: 'POST',
+            headers: {
+               'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({orderToSubmit})
+         })         
+         if (response.status === 202) {
+            toast('Pedido realizado com sucesso! Aguarde nosso contato em até 24 horas!', {
+               type: 'success',
+            })
+            clearAll()
+            router.push('/')
+         } else {
+            toast('Erro ao enviar pedido!', {
+               type: 'error',
+            })
+         }
+      }
+   }
 
    return (
       <div className={styles.order}>
+         <div className={styles.orderWarn}>
+            AVISO! Neste momento somente estamos entregando em Peruíbe-SP
+         </div>
+         {errors.length > 0 && (
+            <div className={styles.orderErrors}>
+               {errors.map((error, index) => (
+                  <div key={index}>{error}</div>
+               ))}
+            </div>
+         )}
          <h1 className={styles.orderTitle}>Pedido</h1>
          <hr />
          <h2 className={styles.orderSubtitle}>Dados do Cliente</h2>
@@ -36,9 +168,15 @@ const OrderConfirmation: React.FC = () => {
                value={email}
             />
             <br />
+            <Input
+               placeholder="Endereço"
+               onChange={(e) => setAddress(e.target.value)}
+               value={address}
+            />
+            <br />
             <div className={styles.orderInputsDivided}>
                <Input
-                  placeholder="Telefone"
+                  placeholder="Telefone c/ DDD"
                   onChange={(e) => setPhone(e.target.value)}
                   value={phone}
                />
@@ -47,12 +185,35 @@ const OrderConfirmation: React.FC = () => {
                   className={styles.orderSelectInput}
                   onChange={(e) => setCity(e.target.value)}>
                   <option value="Peruíbe">Peruíbe</option>
-                  <option value="Itanhaém">Itanhaém</option>
+                  <option value="Itanhaém" disabled>
+                     Itanhaém
+                  </option>
                </select>
             </div>
-            <br/>
-            <Button variant='secondary'>Salvar Dados</Button>
+            <br />
+            
+            <Button variant="secondary" onClick={() => handleSaveBuyer()}>
+               Salvar Dados
+            </Button>
          </div>
+         <br />
+         <hr />
+         <h2 className={styles.orderSubtitle}>Informações de Entrega</h2>
+         <p className={styles.orderDeliveryInfo}>
+            Visando sempre fornecer os produtos com a maior qualidade possível,
+            não mantemos estoque, fazemos sob encomenda. Por esse motivo,
+            solicitamos atenção conforme abaixo:
+         </p>
+         <ul>
+            <p className={styles.orderDeliveryInfo}>
+               - Pedidos confirmados até às 13h00 de segunda-feira serão
+               entregues na quarta-feira seguinte até as 18h00.
+            </p>
+            <p className={styles.orderDeliveryInfo}>
+               - Pedidos confirmados até às 13h00 de quarta-feira serão
+               entregues na sexta-feira seguinte até as 18h00.
+            </p>
+         </ul>
          <br />
          <hr />
          <h2 className={styles.orderSubtitle}>Itens Comprados</h2>
@@ -90,10 +251,28 @@ const OrderConfirmation: React.FC = () => {
          </ul>
          <div className={styles.orderValues}>
             <div>Total: {formatters.currency(getCartTotalWODiscount())}</div>
-            <div>Desconto: {discount * 100}%</div>
-            <div>Taxa de Entrega: {formatters.currency(deliveryRate(city))}</div>
-            <div>Total a Pagar: {formatters.currency(getCartTotal() + deliveryRate(city))}</div>
-            <div>Preço Médio: {formatters.currency((getCartTotal() + deliveryRate(city)) / getTotalItems())}</div>
+            {discount > 0 && <div>Desconto: {discount * 100}%</div>}
+            <div>
+               Taxa de Entrega: {formatters.currency(deliveryRate(city))}
+            </div>
+            <div>
+               Total a Pagar:{' '}
+               <span className={styles.orderValue}>
+                  {formatters.currency(getCartTotal() + deliveryRate(city))}
+               </span>
+            </div>
+            {getTotalItems() > 5 && (
+               <div>
+                  Preço Médio:{' '}
+                  {formatters.currency(
+                     (getCartTotal() + deliveryRate(city)) / getTotalItems()
+                  )}
+               </div>
+            )}
+         </div>
+         <div className={styles.orderActions}>
+            <Button variant='secondary' onClick={() => router.push('/')}>Voltar</Button>
+            <Button onClick={handleSubmitOrder}>CONFIMAR PEDIDO</Button>
          </div>
       </div>
    )

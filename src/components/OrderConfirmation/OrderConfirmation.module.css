@@ -2,6 +2,26 @@
     padding: 20px;
 }
 
+.orderWarn {
+    padding: 10px;
+    background-color: #ebe1b8;
+    border-radius: 5px;
+    color: #000;
+    font-size: 16px;
+    text-align: center;
+}
+
+.orderErrors {
+    margin: 4px 0;
+    padding: 10px;
+    background-color: #f2dede;
+    border-radius: 5px;
+    color: #a94442;
+    font-size: 16px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .orderTitle {
     font-size: 24px;
     padding: 10px;    
@@ -32,6 +52,9 @@
 
 .orderSelectInput:active, .orderSelectInput:focus {
    outline-color: var(--theme-700);
+}
+.orderDeliveryInfo {
+    font-size: 16px;
 }
 
 .orderSummaryHeader {
@@ -71,14 +94,6 @@
     min-height: 100px;
 }
 
-.orderValues {
-    display: flex;
-    flex-direction: column;
-    text-align: right;
-    gap: 5px;
-    padding-right: 0px 10px;
-}
-
 .orderItem h3 {
     font-size: 14px;
     font-weight: 500;
@@ -106,8 +121,28 @@
     padding: 10px;
 }
 
+.orderValues {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    gap: 5px;
+    padding-right: 0px 10px;
+    font-size: 16px;
+}
 
+.orderValue {
+    color: var(--theme-700);
+    font-weight: bold;
+}
 
+.orderActions {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 15px 0;
+    gap: 10px;
+}
 
 
 

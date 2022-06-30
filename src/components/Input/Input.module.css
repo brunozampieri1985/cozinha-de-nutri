@@ -24,14 +24,14 @@
 
 .inputBox input:valid ~ span,
 .inputBox input:focus ~ span {
-    color: #fff;
+    color: var(--theme-700);
     transform: translateX(10px) translateY(-7px);
     font-size: 10px;
+    font-weight: bold;
     padding: 0 10px;
-    background: var(--theme-700);
+    background: #fff;
     letter-spacing: 2px;
     text-transform: uppercase;
-    border: 1px solid var(--theme-700);
     transition: 0.5s;
 }
 

@@ -35,6 +35,7 @@ export interface IBuyer {
    name: string
    email: string
    phone: string
+   address: string
    city: string
 }
 
@@ -470,10 +471,11 @@ type AppStoreType = {
    getTotalItems: () => number
    discount: number
    saveOrder: (order: IOrder) => void
-   order: IOrder | null,
-   buyer: IBuyer | null,
+   order: IOrder | null
+   buyer: IBuyer | null
    saveBuyer: (buyer: IBuyer) => void
    deliveryRate: (city: string) => number
+   clearAll: () => void
 }
 
 export const AppContext = createContext<AppStoreType>({} as AppStoreType)
@@ -513,6 +515,14 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
          }
       }
       return 30
+   }
+
+   const clearAll = () => {
+      setCart([])
+      setOrder(null)
+      setDiscount(0)
+      localStorage.removeItem('cart')
+      localStorage.removeItem('buyer')
    }
    
    const isOnCart = (item: ICardapio) => {
@@ -778,7 +788,8 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             buyer,
             saveBuyer,
             getCartTotalWODiscount,
-            deliveryRate
+            deliveryRate,
+            clearAll
          }}>
          {children}
       </AppContext.Provider>
