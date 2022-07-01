@@ -1,10 +1,8 @@
 import styles from './Socials.module.css'
 import { FaWhatsapp, FaInstagram } from 'react-icons/fa'
-import { useRouter } from 'next/router'
 import Link from 'next/link'
 
 const Socials: React.FC = () => {
-   const router = useRouter()
 
    return (
       <div className={styles.socials}>
