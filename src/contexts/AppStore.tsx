@@ -444,6 +444,51 @@ export const Cardapio: ICardapio[] = [
       price: 18.9,
       promoPrice: false,
    },
+   {
+      category: 'Caldos',
+      title: 'Caldo verde',
+      isLowCarb: true,
+      weight: 400,
+      measure: 'ml',
+      price: 17,
+      promoPrice: false,
+   },
+   {
+      category: 'Caldos',
+      title: 'Abobora cabotiá com carne desfiada',
+      isLowCarb: true,
+      weight: 400,
+      measure: 'ml',
+      price: 17,
+      promoPrice: false,
+   },
+   {
+      category: 'Caldos',
+      title: 'Mandioquinha com frango',
+      isLowCarb: false,
+      weight: 400,
+      measure: 'ml',
+      price: 17,
+      promoPrice: false,
+   },
+   {
+      category: 'Caldos',
+      title: 'Legumes com carne desfiada',
+      isLowCarb: true,
+      weight: 400,
+      measure: 'ml',
+      price: 17,
+      promoPrice: false,
+   },
+   {
+      category: 'Caldos',
+      title: 'Legumes com frango desfiado',
+      isLowCarb: true,
+      weight: 400,
+      measure: 'ml',
+      price: 17,
+      promoPrice: false,
+   }
 ]
 
 export const Categories = Cardapio.reduce((acc, curr) => {
