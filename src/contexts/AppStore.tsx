@@ -1,6 +1,5 @@
 import { createContext, useState, useEffect } from 'react'
 import { toast } from 'react-toastify'
-
 export interface ICardapio {
    category: string
    title: string
