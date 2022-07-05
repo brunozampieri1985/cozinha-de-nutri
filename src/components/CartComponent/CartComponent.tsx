@@ -17,7 +17,6 @@ const CartComponent: React.FC = () => {
       removeFromCart,
       increaseQuantity,
       decreaseQuantity,
-      discount,
       getTotalItems,
       saveOrder,
       buyer

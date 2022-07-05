@@ -25,7 +25,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                {product.isLowCarb ? (
                   <div className={styles.productCard__badge}>Low Carb</div>
                ) : null}
-               {typeof product.promoPrice === 'number' ? (
+               {product.promoPrice > 0 ? (
                   <div className={styles.productCard__badge}>Promoção</div>
                ) : null}
             </div>
@@ -34,7 +34,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
                {product.measure}
             </div>
             <div className={styles.productCard__priceWrapper}>
-               {typeof product.promoPrice === 'number' ? (
+               {product.promoPrice > 0 ? (
                   <>
                      <span className={styles.productCard__price}>De: </span>
                      <span className={styles.productCard__promoPrice}>
