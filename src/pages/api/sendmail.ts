@@ -15,22 +15,22 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
    html += `<h3>Cidade: ${buyer?.city}`
    html += `<br/><hr/><br/>`
    items.map((item) => {
-      html += `<p><strong>${item.item.title} - ${item.item.weight}${item.item.measure}</strong></p>
+      html += `<p><strong>${item.item.title} - ${item.item.weight}${
+         item.item.measure
+      }</strong></p>
       <p>Quantidade: <strong>${item.quantity}</strong></p> 
-      <p>R$/UN: <string>${formatters.currency(item.price)}</p></strong>
+      <p>R$/UN: <strong>${formatters.currency(item.price)}</p></strong>
       <hr/>
       <br/>`
    })
-
    html += ``
    html += `<p>Total: ${formatters.currency(total)}</p>`
-   
 
    sgMail.setApiKey(process.env.SENDGRID_API_KEY as string)
 
    const msg = {
-      to: 'cozinhadenutri@hotmail.com', // Change to your recipient
-      from: 'cozinhadenutri@hotmail.com', // Change to your verified sender
+      to: 'cozinhadenutri13@gmail.com',
+      from: 'cozinhadenutri@hotmail.com',
       subject: `Pedido de ${buyer?.name as string}`,
       html,
    }
