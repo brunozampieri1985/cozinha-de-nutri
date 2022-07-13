@@ -49,7 +49,7 @@ const ProductList: React.FC = () => {
             )}
          </div>
          <div className={styles.productList}>
-            {cardapio.map((item, index) => (
+            {cardapio.sort((a, b) => a.title.localeCompare(b.title)).map((item, index) => (
                <ProductCard key={index} product={item} />
             ))}
          </div>
