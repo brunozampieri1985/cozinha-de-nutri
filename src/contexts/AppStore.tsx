@@ -10,7 +10,7 @@ export interface ICardapio {
    weight: number
    measure: string
    price: number
-   promoPrice: number 
+   promoPrice: number
    created?: string
 }
 
@@ -53,6 +53,7 @@ type AppStoreType = {
    Categories: string[]
    addToCart: (item: ICardapio) => void
    handleFilters: (by: string, value: string) => void
+   handleFiltersV2: (text: string, category: string) => void
    cart: IOrderItem[]
    cardapio: ICardapio[]
    filterByText: string
@@ -74,37 +75,44 @@ type AppStoreType = {
 
 export const AppContext = createContext<AppStoreType>({} as AppStoreType)
 
-export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
-   children,
-}) => {   
+type AppProviderProps = {
+   children: React.ReactNode
+}
+
+export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
+   const [fullCardapio, setFullCardapio] = useState<ICardapio[]>([])
    const [cardapio, setCardapio] = useState<ICardapio[]>([])
    const [cart, setCart] = useState<IOrderItem[]>([])
    const [filterByText, setFilterByText] = useState<string>('')
    const [filterByCategory, setFilterByCategory] = useState<string>('')
    const [discount, setDiscount] = useState(0)
-   const [order, setOrder] = useState<IOrder|null>(null)
-   const [buyer, setBuyer] = useState<IBuyer|null>(null)
+   const [order, setOrder] = useState<IOrder | null>(null)
+   const [buyer, setBuyer] = useState<IBuyer | null>(null)
    const [isLoading, setIsLoading] = useState(true)
 
-   const Categories = useMemo(() => cardapio.reduce((acc, curr) => {
-      if (!acc.includes(curr.category)) {
-         acc.push(curr.category)
-      }
-      return acc
-   }, [] as string[]), [cardapio])
+   const Categories = useMemo(
+      () =>
+         fullCardapio.reduce((acc, curr) => {
+            if (!acc.includes(curr.category)) {
+               acc.push(curr.category)
+            }
+            return acc
+         }, [] as string[]),
+      [fullCardapio]
+   )
 
    const saveBuyer = (buyer: IBuyer) => {
       setBuyer(buyer)
       if (order) {
          setOrder({
             ...order,
-            buyer
+            buyer,
          })
       }
       localStorage.setItem('buyer', JSON.stringify(buyer))
    }
-   
-   const saveOrder = (order: IOrder) => { 
+
+   const saveOrder = (order: IOrder) => {
       setOrder(order)
    }
 
@@ -125,7 +133,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setDiscount(0)
       localStorage.removeItem('cart')
    }
-   
+
    const isOnCart = (item: ICardapio) => {
       let itemOnCart = cart.filter((citem) => {
          if (
@@ -236,6 +244,78 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       return percentage
    }
 
+   const handleFiltersV2 = (text: string, category: string) => {
+      alert('v2')
+      if (text === '' && category === '') {
+         setCardapio(fullCardapio)
+         return
+      }
+      if (text.length > 0 && category === '') {
+         setCardapio(
+            fullCardapio.filter((item) => {
+               return item.title.toLowerCase().includes(text.toLowerCase())
+            })
+         )
+         return
+      }
+      if (text === '' && category.length > 0) {
+         if (category === 'Todas') {
+            setCardapio(
+               fullCardapio.filter((item) => {
+                  return item.title.toLowerCase().includes(text.toLowerCase())
+               })
+            )
+            return
+         }
+         if (category === 'Low Carb') {
+            setCardapio(
+               fullCardapio.filter((item) => {
+                  return (
+                     item.title.toLowerCase().includes(text.toLowerCase()) &&
+                     item.isLowCarb === true
+                  )
+               })
+            )
+            return
+         }
+         setCardapio(
+            fullCardapio.filter((item) => {
+               return item.category === category
+            })
+         )
+         return
+      }
+      if (text.length > 0 && category.length > 0) {
+         if (category === 'Todas') {
+            setCardapio(
+               fullCardapio.filter((item) => {
+                  return item.title.toLowerCase().includes(text.toLowerCase())
+               })
+            )
+            return
+         }
+         if (category === 'Low Carb') {
+            setCardapio(
+               fullCardapio.filter((item) => {
+                  return (
+                     item.title.toLowerCase().includes(text.toLowerCase()) &&
+                     item.isLowCarb === true
+                  )
+               })
+            )
+            return
+         }
+         setCardapio(
+            fullCardapio.filter((item) => {
+               return (
+                  item.title.toLowerCase().includes(text.toLowerCase()) &&
+                  item.category === category
+               )
+            })
+         )
+      }
+   }
+
    const handleFilters = (by: string, value: string) => {
       let result: ICardapio[] = []
 
@@ -252,7 +332,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             })
          } else {
             if (value === '') {
-               result = cardapio
+               result = fullCardapio
             } else {
                cardapio.filter((item) => {
                   if (item.title.includes(value)) {
@@ -272,7 +352,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
                   }
                })
             } else {
-               result = cardapio
+               result = fullCardapio
             }
          } else if (value === 'Low Carb') {
             if (filterByText !== '') {
@@ -290,7 +370,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             }
          } else {
             if (filterByText !== '') {
-               cardapio.filter((item) => {
+               fullCardapio.filter((item) => {
                   if (
                      item.category === value &&
                      item.title.includes(filterByText)
@@ -352,6 +432,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       const getFullCardapio = async () => {
          const response = await supabase.from<ICardapio>('cardapio').select('*')
          setCardapio(response.data as unknown as ICardapio[])
+         setFullCardapio(response.data as unknown as ICardapio[])
       }
 
       getFullCardapio()
@@ -375,7 +456,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
       setIsLoading(false)
    }, [])
 
-   if (isLoading) return <Loading/>
+   if (isLoading) return <Loading />
 
    return (
       <AppContext.Provider
@@ -384,6 +465,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             addToCart,
             cart,
             handleFilters,
+            handleFiltersV2,
             cardapio,
             filterByText,
             getCartTotal,
@@ -399,7 +481,7 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({
             saveBuyer,
             getCartTotalWODiscount,
             deliveryRate,
-            clearAll
+            clearAll,
          }}>
          {children}
       </AppContext.Provider>
